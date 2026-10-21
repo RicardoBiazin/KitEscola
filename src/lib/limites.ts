@@ -83,7 +83,7 @@ function chaveIp(ip: string, rota: Rota): string {
 
 /**
  * Confere os limites de uma requisição. `passe` só é informado nas rotas que consomem passe.
- * "indisponivel" quando o armazenamento falha: a rota recusa (fecha), em vez de deixar passar sem conta.
+ * Se o armazenamento falhar, segue sem contar (ver o catch). "indisponivel" fica no tipo por compatibilidade.
  */
 export async function verificarLimites(
   rota: Rota,
@@ -103,7 +103,10 @@ export async function verificarLimites(
     }
     return "ok";
   } catch (e) {
-    console.error("limites: armazenamento indisponível:", e instanceof Error ? e.message : String(e));
-    return "indisponivel";
+    // Os contadores são um complemento. A proteção principal é o Turnstile em cada busca, mais o
+    // limite de rajada por IP que a própria Netlify aplica (netlify/edge-functions/limite-api.ts).
+    // Em 21/10/2026 o Blobs não respondia na função; recusar aqui bloqueava todo mundo.
+    console.error("limites: armazenamento indisponível, seguindo sem contar:", e instanceof Error ? e.message : String(e));
+    return "ok";
   }
 }

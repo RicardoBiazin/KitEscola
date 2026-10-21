@@ -83,7 +83,8 @@ Variáveis da Netlify:
 Proteção (exigida por padrão, versão 0.9.0):
 - Cada busca passa pelo Cloudflare Turnstile, com token de uso único conferido no servidor.
 - A busca devolve um passe assinado (HMAC, nonce, 10 min, preso ao IP). `/api/otimizar` e `/api/importar` exigem o passe; `/api/passe` emite um passe para importar a planilha (com Turnstile).
-- Limites: por IP (por hora) em cada rota e no máximo 10 chamadas por passe. Os contadores ficam no Netlify Blobs (loja `kitescola-limites`). Se o armazenamento falhar, a rota responde 503 (fecha).
+- Limite de rajada: 20 chamadas por minuto por IP em `/api/*`, aplicado pela Netlify (`netlify/edge-functions/limite-api.ts`, resposta 429).
+- Contadores complementares (por IP por hora e 10 chamadas por passe) no Netlify Blobs (loja `kitescola-limites`). Em 21/10/2026 o Blobs não respondia dentro da função; nesse caso eles seguem sem contar e registram no log, porque o Turnstile e o limite de rajada continuam valendo.
 - Sem as chaves, ou sem `KITESCOLA_SEGREDO`, as rotas recusam (503/403). Não há mais como deixar a proteção desligada por esquecimento.
 - O IP vem de `x-nf-client-connection-ip`; na Netlify os cabeçalhos `x-forwarded-for` e `cf-connecting-ip` são ignorados.
 

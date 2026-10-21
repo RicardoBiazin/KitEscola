@@ -78,7 +78,9 @@ describe("verificarLimites", () => {
     expect(await verificarLimites("otimizar", "1.1.1.1", "lixo", 0, armazemFalso())).toBe("excedido");
   });
 
-  it("falha do armazenamento fecha a rota (indisponivel), não deixa passar", async () => {
+  // Mudou em 0.9.2: o Blobs não respondia na função e recusar bloqueava todo mundo. A barreira
+  // principal é o Turnstile em cada busca, mais o limite de rajada da Netlify (edge function).
+  it("falha do armazenamento segue sem contar (não bloqueia quem passou pelo Turnstile)", async () => {
     vi.spyOn(console, "error").mockImplementation(() => {});
     const quebrado: Armazem = {
       ler: async () => {
@@ -86,7 +88,7 @@ describe("verificarLimites", () => {
       },
       gravar: async () => {},
     };
-    expect(await verificarLimites("buscar", "1.1.1.1", null, 0, quebrado)).toBe("indisponivel");
+    expect(await verificarLimites("buscar", "1.1.1.1", null, 0, quebrado)).toBe("ok");
   });
 
   it("local (KITESCOLA_LOCAL=1) não conta nada", async () => {

@@ -57,7 +57,7 @@ Continuam bloqueados (403): `/sites/MLB/search`, `/items/{id}` e `/items/{id}/sh
 
 Veja `.env.example`: `KITESCOLA_NAVEGADOR=off` desliga as lojas que precisam de navegador; `KITESCOLA_LOJAS_OFF=amazon,kalunga` desliga lojas específicas.
 
-Proteção anti-robô: é exigida por padrão. Sem as chaves do Turnstile e sem `KITESCOLA_SEGREDO`, busca, importação e otimização recusam. Para uso só no computador, `KITESCOLA_LOCAL=1` (já está no `.env.local` deste computador; `iniciar.bat` também define). Node 22.12 ou superior.
+Proteção anti-robô: é exigida por padrão. Sem as chaves do Turnstile e sem `KITESCOLA_SEGREDO`, busca, importação e otimização recusam. Para uso só no computador, `KITESCOLA_LOCAL=1` (definido pelo `iniciar.bat` e pelo e2e; no `npm run dev`, via `.env.development.local`). Node 22.12 ou superior.
 
 ## Testes
 
@@ -69,7 +69,9 @@ npm run sonda -- "caderno 10 matérias" 88010000   # teste REAL: consulta todas 
 
 ## Online (Netlify)
 
-O site fica em https://kitescola.biazin.com.br (projeto Netlify `kitescola`). Para publicar: `netlify deploy --build --prod`.
+O site fica em https://kitescola.biazin.com.br (projeto Netlify `kitescola`). Para publicar: **`npm run publicar`** (com a árvore git limpa).
+
+O script publica a partir de uma cópia limpa do git, sem nenhum `.env` local, e depois testa no site no ar que a proteção está ligada; se não estiver, volta para o deploy anterior. Não use `netlify deploy` direto da pasta do projeto: o adaptador copia o `.env.local` para dentro da função.
 
 Variáveis da Netlify:
 - `ML_CLIENT_ID` e `ML_CLIENT_SECRET`
@@ -85,7 +87,7 @@ Proteção (exigida por padrão, versão 0.9.0):
 - Sem as chaves, ou sem `KITESCOLA_SEGREDO`, as rotas recusam (503/403). Não há mais como deixar a proteção desligada por esquecimento.
 - O IP vem de `x-nf-client-connection-ip`; na Netlify os cabeçalhos `x-forwarded-for` e `cf-connecting-ip` são ignorados.
 
-Uso local (`iniciar.bat`, `npm run dev`, e2e): `.env.local` com `KITESCOLA_LOCAL=1` desliga a proteção e os limites. Só vale fora da Netlify.
+Uso local: `KITESCOLA_LOCAL=1` desliga a proteção e os limites. O `iniciar.bat` e o e2e já definem a variável; para o `npm run dev`, ela fica em `.env.development.local`. **Nunca** coloque essa variável no `.env.local`, porque ele vai junto para a função da Netlify. Dentro da função (AWS Lambda) ela é ignorada.
 
 Pendência conhecida: a CSP ainda tem `script-src 'unsafe-inline'` (o bootstrap do Next.js precisa, sem nonces). Não foi alterada nesta versão.
 

@@ -8,9 +8,22 @@ import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 
 const VALIDADE_PASSE_MS = 10 * 60 * 1000;
 
-/** Verdadeiro só no computador do desenvolvedor (KITESCOLA_LOCAL=1 fora da Netlify). */
+/**
+ * Roda numa função serverless (Netlify/AWS Lambda)? A variável NETLIFY só existe no build;
+ * em tempo de execução a função é uma Lambda, que define AWS_LAMBDA_FUNCTION_NAME e LAMBDA_TASK_ROOT.
+ */
+export function emServidorOnline(): boolean {
+  const e = process.env;
+  return Boolean(e.NETLIFY || e.AWS_LAMBDA_FUNCTION_NAME || e.LAMBDA_TASK_ROOT || e.AWS_EXECUTION_ENV);
+}
+
+/**
+ * Verdadeiro só no computador do desenvolvedor (KITESCOLA_LOCAL=1 e fora de servidor online).
+ * Em 21/10/2026 o .env.local (com KITESCOLA_LOCAL=1) foi copiado para dentro da função da Netlify
+ * e, sem NETLIFY em tempo de execução, a proteção ficou desligada. Por isso a checagem da Lambda.
+ */
 export function modoLocal(): boolean {
-  return process.env.KITESCOLA_LOCAL === "1" && !process.env.NETLIFY;
+  return process.env.KITESCOLA_LOCAL === "1" && !emServidorOnline();
 }
 
 export function turnstileConfigurado(): boolean {

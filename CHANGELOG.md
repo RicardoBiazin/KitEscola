@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.9.2 — 2026-10-21
+
+Correção de segurança.
+
+- **A proteção anti-robô estava desligada em produção desde a 0.9.0** (14/10/2026). Duas causas se somaram:
+  - O adaptador Next.js da Netlify copia o `.env.local` para dentro da função, e esse arquivo tinha `KITESCOLA_LOCAL=1`, que desliga a proteção no computador.
+  - A trava "ignorar `KITESCOLA_LOCAL` na Netlify" dependia da variável `NETLIFY`, que só existe no build, não quando a função roda.
+- `modoLocal()` agora também reconhece a função em execução (AWS Lambda: `AWS_LAMBDA_FUNCTION_NAME`, `LAMBDA_TASK_ROOT`, `AWS_EXECUTION_ENV`) e se recusa a desligar a proteção lá. Há teste de regressão.
+- `KITESCOLA_LOCAL` saiu do `.env.local`. Agora fica no `.env.development.local` (só o `next dev` lê); `iniciar.bat` e o e2e já definem a variável sozinhos.
+- Novo `npm run publicar`:
+  - publica a partir de uma cópia limpa do git (worktree), sem nenhum `.env` local;
+  - confere que nenhum `.env` foi para o deploy;
+  - testa no site no ar que `/api/buscar` e `/api/passe` recusam quem não passou pelo Turnstile;
+  - se alguma rota responder 200, volta sozinho para o deploy anterior.
+
 ## 0.9.1 — 2026-10-21
 
 - Repositório público, com licença **MIT** e histórico novo, começando nesta versão. O histórico de desenvolvimento anterior (0.1.0 a 0.9.0) ficou num repositório privado.

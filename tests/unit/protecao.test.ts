@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { conferirPasse, emitirPasse, ipDe, modoLocal, partesDoPasse, protecaoFaltando, verificarTurnstile } from "@/lib/protecao";
 
-const VARS = ["TURNSTILE_SECRET_KEY", "KITESCOLA_SEGREDO", "KITESCOLA_LOCAL", "NETLIFY", "KITESCOLA_EXIGIR_TURNSTILE"];
+const VARS = ["TURNSTILE_SECRET_KEY", "KITESCOLA_SEGREDO", "KITESCOLA_LOCAL", "NETLIFY", "KITESCOLA_EXIGIR_TURNSTILE", "AWS_LAMBDA_FUNCTION_NAME", "LAMBDA_TASK_ROOT", "AWS_EXECUTION_ENV"];
 
 function configurarOnline() {
   process.env.TURNSTILE_SECRET_KEY = "segredo-turnstile";
@@ -103,6 +103,18 @@ describe("protecao (padrão: exigida)", () => {
     process.env.NETLIFY = "true";
     expect(modoLocal()).toBe(false);
     expect(protecaoFaltando()).toBe(true);
+  });
+
+  it("KITESCOLA_LOCAL é ignorado dentro da função (Lambda), mesmo sem NETLIFY", () => {
+    // Regressão de 21/10/2026: o .env.local foi junto para a função e NETLIFY não existe em tempo de execução.
+    for (const lambda of ["AWS_LAMBDA_FUNCTION_NAME", "LAMBDA_TASK_ROOT", "AWS_EXECUTION_ENV"]) {
+      delete process.env.TURNSTILE_SECRET_KEY;
+      process.env.KITESCOLA_LOCAL = "1";
+      process.env[lambda] = "x";
+      expect(modoLocal()).toBe(false);
+      expect(protecaoFaltando()).toBe(true);
+      delete process.env[lambda];
+    }
   });
 
   it("IP vem do cabeçalho da Netlify, que o visitante não forja", () => {

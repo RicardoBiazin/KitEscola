@@ -14,6 +14,7 @@ Correção de segurança.
   - confere que nenhum `.env` foi para o deploy;
   - testa no site no ar que `/api/buscar` e `/api/passe` recusam quem não passou pelo Turnstile;
   - se alguma rota responder 200, volta sozinho para o deploy anterior.
+- **Limites (Netlify Blobs) travavam a função** quando a proteção passou a valer de fato: a primeira leitura ficava pendurada até o 504. Agora cada operação tem prazo de 3 s (estourou, a rota responde 503 em vez de travar), e se a consistência `strong` falhar, cai para `eventual`, registrando o motivo no log.
 
 ## 0.9.1 — 2026-10-21
 

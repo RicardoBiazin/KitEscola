@@ -26,16 +26,44 @@ const HORA_MS = 60 * 60 * 1000;
 export const LIMITE_POR_IP_HORA: Record<Rota, number> = { buscar: 60, passe: 60, importar: 30, otimizar: 60 };
 export const LIMITE_POR_PASSE = 10;
 
-const OPCOES_STORE = { name: "kitescola-limites", consistency: "strong" } as const;
+const NOME_STORE = "kitescola-limites";
+const TEMPO_MAX_MS = 3000;
+
+/** Falha em vez de esperar para sempre: em 21/10/2026 uma chamada ao Blobs travou a função até o 504. */
+export async function comPrazo<T>(p: Promise<T>, ms = TEMPO_MAX_MS): Promise<T> {
+  let t: ReturnType<typeof setTimeout> | undefined;
+  const limite = new Promise<never>((_, falha) => {
+    t = setTimeout(() => falha(new Error(`Blobs não respondeu em ${ms} ms`)), ms);
+  });
+  try {
+    return await Promise.race([p, limite]);
+  } finally {
+    clearTimeout(t);
+  }
+}
+
+// "strong" lê o que acabou de ser gravado; se o ambiente não suportar, cai para "eventual"
+// (uma corrida pode deixar passar poucas chamadas a mais, o que é aceitável aqui).
+let consistencia: "strong" | "eventual" = "strong";
+async function noStore<T>(op: (s: ReturnType<typeof getStore>) => Promise<T>): Promise<T> {
+  try {
+    return await comPrazo(op(getStore({ name: NOME_STORE, consistency: consistencia })));
+  } catch (e) {
+    if (consistencia === "eventual") throw e;
+    console.warn("limites: Blobs com consistência strong falhou, usando eventual:", e instanceof Error ? e.message : String(e));
+    consistencia = "eventual";
+    return comPrazo(op(getStore({ name: NOME_STORE, consistency: "eventual" })));
+  }
+}
 
 /** Netlify Blobs. Fora da Netlify (sem contexto configurado) a leitura lança erro e a rota recusa. */
 export const armazemNetlify: Armazem = {
   async ler(chave) {
-    const v = (await getStore(OPCOES_STORE).get(chave, { type: "json" })) as Partial<Registro> | null;
+    const v = (await noStore((s) => s.get(chave, { type: "json" }))) as Partial<Registro> | null;
     return v && typeof v.n === "number" && typeof v.fim === "number" ? { n: v.n, fim: v.fim } : null;
   },
   async gravar(chave, valor) {
-    await getStore(OPCOES_STORE).setJSON(chave, valor);
+    await noStore((s) => s.setJSON(chave, valor));
   },
 };
 

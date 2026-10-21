@@ -17,6 +17,9 @@ const win = process.platform === "win32";
 const npm = win ? "npm.cmd" : "npm";
 const netlify = win ? "netlify.cmd" : "netlify";
 
+/** JSON como argumento: no Windows (shell do cmd) as aspas precisam de escape para chegar inteiras. */
+const jsonArg = (obj) => (win ? `"${JSON.stringify(obj).replace(/"/g, '\\"')}"` : JSON.stringify(obj));
+
 function rodar(cmd, args, cwd) {
   const r = spawnSync(cmd, args, { cwd, stdio: "inherit", shell: win });
   if (r.status !== 0) throw new Error(`${cmd} ${args[0]} falhou (código ${r.status})`);
@@ -56,7 +59,7 @@ if (saida("git", ["status", "--porcelain"], raiz).trim()) {
   process.exit(1);
 }
 
-const anterior = JSON.parse(saida(netlify, ["api", "getSite", "--data", JSON.stringify({ site_id: SITE_ID })], raiz)).published_deploy?.id;
+const anterior = JSON.parse(saida(netlify, ["api", "getSite", "--data", jsonArg({ site_id: SITE_ID })], raiz)).published_deploy?.id;
 const pasta = mkdtempSync(path.join(tmpdir(), "kitescola-deploy-"));
 console.log(`Cópia limpa em ${pasta} (deploy anterior: ${anterior})`);
 try {
@@ -71,10 +74,11 @@ try {
   const abertas = await conferirProtecao();
   if (abertas.length) {
     console.error(`PROTEÇÃO ABERTA em ${abertas.join(", ")}. Voltando para o deploy ${anterior}.`);
-    if (anterior) rodar(netlify, ["api", "restoreSiteDeploy", "--data", JSON.stringify({ site_id: SITE_ID, deploy_id: anterior })], raiz);
-    process.exit(1);
+    if (anterior) rodar(netlify, ["api", "restoreSiteDeploy", "--data", jsonArg({ site_id: SITE_ID, deploy_id: anterior })], raiz);
+    process.exitCode = 1; // exitCode (e não exit) para o finally limpar a cópia
+  } else {
+    console.log("Publicado e protegido.");
   }
-  console.log("Publicado e protegido.");
 } finally {
   spawnSync("git", ["worktree", "remove", "--force", pasta], { cwd: raiz, stdio: "inherit", shell: win });
   rmSync(pasta, { recursive: true, force: true });

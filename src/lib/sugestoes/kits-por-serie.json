@@ -1,0 +1,90 @@
+{
+  "series": {
+    "infantil": {
+      "nome": "Educação Infantil",
+      "itens": [
+        { "nome": "Lápis de cor 12 cores", "quantidade": 1, "termos": ["lapis de cor", "lapis cor"] },
+        { "nome": "Giz de cera", "quantidade": 1, "termos": ["giz de cera", "giz cera"] },
+        { "nome": "Massinha de modelar", "quantidade": 2, "termos": ["massinha", "massa de modelar"] },
+        { "nome": "Tinta guache", "quantidade": 1, "termos": ["guache"] },
+        { "nome": "Pincel", "quantidade": 1, "termos": ["pincel"] },
+        { "nome": "Cola branca", "quantidade": 2, "termos": ["cola branca", "cola liquida", "cola!bastao"] },
+        { "nome": "Tesoura sem ponta", "quantidade": 1, "termos": ["tesoura"] },
+        { "nome": "Papel sulfite A4", "quantidade": 1, "termos": ["sulfite", "papel a4"] },
+        { "nome": "Caderno de desenho", "quantidade": 1, "termos": ["caderno de desenho", "caderno desenho"] },
+        { "nome": "Lápis preto", "quantidade": 2, "termos": ["lapis preto", "lapis grafite", "lapis!de cor"] },
+        { "nome": "Borracha", "quantidade": 1, "termos": ["borracha"] },
+        { "nome": "Apontador", "quantidade": 1, "termos": ["apontador"] },
+        { "nome": "Avental para pintura", "quantidade": 1, "termos": ["avental"] }
+      ]
+    },
+    "fundamental1": {
+      "nome": "Ensino Fundamental I (1º ao 5º ano)",
+      "itens": [
+        { "nome": "Caderno brochura 96 folhas", "quantidade": 4, "termos": ["caderno brochura", "caderno!de desenho"] },
+        { "nome": "Lápis preto", "quantidade": 4, "termos": ["lapis preto", "lapis grafite", "lapis!de cor"] },
+        { "nome": "Borracha", "quantidade": 2, "termos": ["borracha"] },
+        { "nome": "Apontador com depósito", "quantidade": 1, "termos": ["apontador"] },
+        { "nome": "Lápis de cor 24 cores", "quantidade": 1, "termos": ["lapis de cor", "lapis cor"] },
+        { "nome": "Canetinha hidrocor", "quantidade": 1, "termos": ["canetinha", "hidrocor"] },
+        { "nome": "Cola branca", "quantidade": 1, "termos": ["cola branca", "cola liquida", "cola!bastao"] },
+        { "nome": "Cola bastão", "quantidade": 1, "termos": ["cola bastao"] },
+        { "nome": "Tesoura sem ponta", "quantidade": 1, "termos": ["tesoura"] },
+        { "nome": "Régua 30 cm", "quantidade": 1, "termos": ["regua"] },
+        { "nome": "Estojo", "quantidade": 1, "termos": ["estojo"] },
+        { "nome": "Caderno de desenho", "quantidade": 1, "termos": ["caderno de desenho", "caderno desenho"] },
+        { "nome": "Pasta com elástico", "quantidade": 1, "termos": ["pasta"] }
+      ]
+    },
+    "fundamental2": {
+      "nome": "Ensino Fundamental II (6º ao 9º ano)",
+      "itens": [
+        { "nome": "Caderno 10 matérias", "quantidade": 1, "termos": ["caderno 10", "caderno universitario", "caderno!de desenho"] },
+        { "nome": "Caneta esferográfica azul", "quantidade": 3, "termos": ["caneta azul", "caneta esferografica", "caneta"] },
+        { "nome": "Caneta esferográfica vermelha", "quantidade": 1, "termos": ["caneta vermelha"] },
+        { "nome": "Lápis preto", "quantidade": 2, "termos": ["lapis preto", "lapis grafite", "lapiseira", "lapis!de cor"] },
+        { "nome": "Borracha", "quantidade": 1, "termos": ["borracha"] },
+        { "nome": "Apontador", "quantidade": 1, "termos": ["apontador"] },
+        { "nome": "Marca-texto", "quantidade": 2, "termos": ["marca texto", "marcador de texto"] },
+        { "nome": "Régua 30 cm", "quantidade": 1, "termos": ["regua"] },
+        { "nome": "Kit geometria (esquadros, transferidor)", "quantidade": 1, "termos": ["esquadro", "transferidor", "geometria"] },
+        { "nome": "Compasso", "quantidade": 1, "termos": ["compasso"] },
+        { "nome": "Calculadora simples", "quantidade": 1, "termos": ["calculadora"] },
+        { "nome": "Lápis de cor 12 cores", "quantidade": 1, "termos": ["lapis de cor", "lapis cor"] },
+        { "nome": "Cola bastão", "quantidade": 1, "termos": ["cola"] },
+        { "nome": "Tesoura", "quantidade": 1, "termos": ["tesoura"] },
+        { "nome": "Estojo", "quantidade": 1, "termos": ["estojo"] }
+      ]
+    },
+    "medio": {
+      "nome": "Ensino Médio",
+      "itens": [
+        { "nome": "Caderno 10 matérias", "quantidade": 1, "termos": ["caderno 10", "caderno universitario", "fichario", "caderno!de desenho"] },
+        { "nome": "Caneta esferográfica azul", "quantidade": 3, "termos": ["caneta azul", "caneta esferografica", "caneta"] },
+        { "nome": "Caneta esferográfica preta", "quantidade": 1, "termos": ["caneta preta"] },
+        { "nome": "Lapiseira 0,7 mm", "quantidade": 1, "termos": ["lapiseira", "lapis"] },
+        { "nome": "Grafite 0,7 mm", "quantidade": 1, "termos": ["grafite"] },
+        { "nome": "Borracha", "quantidade": 1, "termos": ["borracha"] },
+        { "nome": "Marca-texto", "quantidade": 3, "termos": ["marca texto", "marcador de texto"] },
+        { "nome": "Corretivo em fita", "quantidade": 1, "termos": ["corretivo"] },
+        { "nome": "Calculadora científica", "quantidade": 1, "termos": ["calculadora"] },
+        { "nome": "Régua 30 cm", "quantidade": 1, "termos": ["regua"] },
+        { "nome": "Kit geometria (esquadros, transferidor)", "quantidade": 1, "termos": ["esquadro", "transferidor", "geometria"] },
+        { "nome": "Compasso", "quantidade": 1, "termos": ["compasso"] },
+        { "nome": "Estojo", "quantidade": 1, "termos": ["estojo"] }
+      ]
+    }
+  },
+  "complementares": [
+    { "nome": "Etiquetas com nome", "quantidade": 1, "termos": ["etiqueta"], "motivo": "Identifica o material e evita perdas" },
+    { "nome": "Plástico para encapar", "quantidade": 1, "termos": ["encapar", "plastico adesivo", "contact"], "quando": ["caderno", "livro"], "motivo": "Protege cadernos e livros durante o ano" },
+    { "nome": "Borracha", "quantidade": 1, "termos": ["borracha"], "quando": ["lapis", "lapiseira"], "motivo": "Quem usa lápis precisa de borracha" },
+    { "nome": "Apontador com depósito", "quantidade": 1, "termos": ["apontador"], "quando": ["lapis de cor", "lapis preto", "lapis"], "motivo": "Para os lápis da lista" },
+    { "nome": "Grafite 0,7 mm", "quantidade": 1, "termos": ["grafite"], "quando": ["lapiseira"], "motivo": "Refil para a lapiseira" },
+    { "nome": "Estojo", "quantidade": 1, "termos": ["estojo"], "quando": ["lapis", "caneta", "borracha"], "motivo": "Para guardar lápis, canetas e borracha" },
+    { "nome": "Mochila escolar", "quantidade": 1, "termos": ["mochila"], "motivo": "Confira se a do ano passado ainda serve" },
+    { "nome": "Garrafa de água", "quantidade": 1, "termos": ["garrafa", "squeeze", "garrafinha"], "motivo": "Hidratação durante as aulas" },
+    { "nome": "Lancheira", "quantidade": 1, "termos": ["lancheira"], "motivo": "Para o lanche" },
+    { "nome": "Pasta com elástico", "quantidade": 1, "termos": ["pasta"], "quando": ["sulfite", "folha"], "motivo": "Guarda folhas e trabalhos sem amassar" }
+  ]
+}

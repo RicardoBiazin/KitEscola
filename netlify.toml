@@ -1,0 +1,9 @@
+# KitEscola na Netlify (Next.js via adaptador oficial, detectado automaticamente).
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # Os binários de navegador do Playwright não existem na Netlify.
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = "1"

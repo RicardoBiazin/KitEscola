@@ -1,6 +1,6 @@
 {
   "name": "kitescola",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -14,21 +14,21 @@
     "publicar": "node scripts/publicar.mjs"
   },
   "dependencies": {
-    "@netlify/blobs": "^11.1.4",
+    "@netlify/blobs": "^11.1.6",
     "cheerio": "^1.2.0",
     "lru-cache": "^11.5.3",
     "next": "15.5.28",
     "p-limit": "^7.3.3",
-    "playwright-core": "^1.63.0",
-    "react": "19.1.9",
-    "react-dom": "19.1.9",
+    "playwright-core": "^1.64.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@playwright/test": "^1.63.0",
+    "@playwright/test": "^1.64.1",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^24.13.6",
+    "@types/node": "^24.19.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",

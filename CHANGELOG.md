@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.9.3 — 2026-10-23
+
+Atualização de dependências, sem mudança de comportamento.
+
+- React e React DOM 19.1.9 -> 19.3.1.
+- `@netlify/blobs` 11.1.4 -> 11.1.6; `@playwright/test` e `playwright-core` 1.63 -> 1.64.1; `@types/node` 24.13 -> 24.19.2.
+- Mantidos: Next.js 15.5 (16 exige migração), ESLint 9 (o `eslint-config-next` 15 ainda não roda no ESLint 10), TypeScript 5.9 (7.0 é outro compilador).
+- Testes (126), typecheck, build e e2e passam. `npm audit`: 0 vulnerabilidades.
+
 ## 0.9.2 — 2026-10-21
 
 Correção de segurança.
